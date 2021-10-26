@@ -9,16 +9,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.context.annotation.ComponentScan.*;
+
 public class ComponentFilterAppConfigTest {
     
     @Test
     void filterScan() {
         ApplicationContext ac = new AnnotationConfigApplicationContext(ComponentFilterAppConfig.class);
         BeanA beanA = ac.getBean("beanA", BeanA.class);
-        Assertions.assertThat(beanA).isNotNull();
+        assertThat(beanA).isNotNull();
 
         
-        org.junit.jupiter.api.Assertions.assertThrows(
+        assertThrows(
             NoSuchBeanDefinitionException.class,
             () -> ac.getBean("beanB", BeanB.class));
         
@@ -26,8 +30,8 @@ public class ComponentFilterAppConfigTest {
 
     @Configuration
     @ComponentScan(
-        includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = MyIncludeComponent.class),
-        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = MyExcludeComponent.class)
+        includeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyIncludeComponent.class),
+        excludeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyExcludeComponent.class)
         )
     static class ComponentFilterAppConfig {
 
