@@ -14,6 +14,7 @@ public class HelloLombok {
         HelloLombok helloLombok = new HelloLombok();
         helloLombok.setName("asdf");
 
-        System.out.println("hellowLombok = " + helloLombok);
+        String name = helloLombok.getName();
+        System.out.println("name = " + name);
     }
 }
